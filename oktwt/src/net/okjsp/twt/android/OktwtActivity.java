@@ -18,7 +18,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class OktwtActivity extends Activity {
-    Twitter twitter = new TwitterFactory().getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,11 +31,14 @@ public class OktwtActivity extends Activity {
     }
 
 	private List<TwtRecord> getList() {
+		
+		Twitter twitter = new TwitterFactory().getInstance();
+
 		List<TwtRecord> list = new ArrayList<TwtRecord>();
 		try {
-			List<Status> statuses = twitter.getPublicTimeline();
+			List<Status> statuses = twitter.getHomeTimeline();
 			for (Status status : statuses) {
-				list.add(new TwtRecord("@" + status.getUser().getScreenName(), status.getText(), status.getUser().getProfileImageURL().getPath()) );
+				list.add(new TwtRecord("@" + status.getUser().getScreenName(), status.getText(), status.getUser().getProfileImageURL()) );
 			}
 		} catch (TwitterException te) {
 			te.printStackTrace();
